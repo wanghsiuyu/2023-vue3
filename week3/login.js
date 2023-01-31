@@ -15,13 +15,14 @@ const app = {
         .then((res) => {
           console.log(res.data);
           const { token, expired } = res.data;
-          //token 存入 cookie
           document.cookie = `myToken=${token}; expires=${new Date(expired)};`;
-          //跳轉頁面
           window.location = './product.html';
         })
         .catch((err) => {
+          console.log(err);
           alert(err.response.data.message);
+          this.email = '';
+          this.password = '';
         });
     },
   },

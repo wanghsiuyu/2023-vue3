@@ -19,6 +19,7 @@
   </head>
   <body>
     <div id="app">
+      <loading v-model:active="isLoading"></loading>
       <!-- navbar start-->
       <nav class="navbar fixed-top navbar-expand-lg navbar-light" style="background-color: #f0f8ec">
         <div class="container">
@@ -180,21 +181,21 @@
         <!-- 產品列表 end-->
 
         <div class="row justify-content-center">
+          <!-- 購物車 start -->
           <div class="col-8">
-            <!-- 購物車 start -->
             <div class="mb-5">
               <h2 class="h3 text-center">購物車</h2>
               <h4 v-if="!cartsTotal.total" class="text-center">購物車沒有任何品項</h4>
               <div v-else>
                 <div class="text-end my-4">
-                  <button type="button" class="btn btn-outline-danger" @click="removeCartsAll">清空購物車</button>
+                  <button type="button" class="btn btn-outline-secondary" @click="removeCartsAll">清空購物車</button>
                 </div>
                 <table class="table align-middle">
                   <tbody>
                     <tr class="border-bottom">
                       <td></td>
+                      <td>品項</td>
                       <td></td>
-                      <td>品名</td>
                       <td>單價</td>
                       <td>數量</td>
                       <td class="text-center">價格</td>
@@ -206,7 +207,7 @@
                         </a>
                       </td>
                       <td>
-                        <img :src="cart.product.imageUrl" class="img-cover" width="150" height="90" alt="cart.product.title" />
+                        <img :src="cart.product.imageUrl" class="img-cover" width="90" height="90" alt="cart.product.title" />
                       </td>
                       <td class="text-start">{{ cart.product.title }}</td>
                       <td class="text-start">NT${{cart.product.price}} / {{cart.product.unit}}</td>
@@ -217,7 +218,6 @@
                       </td>
                       <td class="text-end">NT${{ cart.total}}</td>
                     </tr>
-
                     <tr>
                       <td colspan="4">小計</td>
                       <td colspan="2" class="text-end">NT${{cartsTotal.total}}</td>
@@ -238,10 +238,12 @@
                 </table>
               </div>
             </div>
-            <!-- 購物車 end -->
-            <!-- 訂單連絡資訊 start -->
+          </div>
+          <!-- 購物車 end -->
+          <!-- 訂單連絡資訊 start -->
+          <div class="col-6">
             <div class="mb-5">
-              <v-form v-slot="{ errors }" @submit="onSubmit">
+              <v-form v-slot="{ errors }" @submit="onSubmit" ref="form">
                 <h2 class="h3 text-center">訂單連絡資訊</h2>
                 <div class="mb-4">
                   <label for="name" class="form-label">姓名<span class="text-danger">*</span></label>
@@ -250,7 +252,7 @@
                 </div>
                 <div class="mb-4">
                   <label for="phone" class="form-label">手機<span class="text-danger">*</span></label>
-                  <v-field id="phone" name="電話" type="text" class="form-control" :class="{ 'is-invalid': errors['電話'] }" placeholder="0912345678" :rules="isPhone" v-model="user.tel"></v-field>
+                  <v-field id="phone" name="電話" type="tel" class="form-control" :class="{ 'is-invalid': errors['電話'] }" placeholder="0912345678" :rules="isPhone" v-model="user.tel"></v-field>
                   <error-message name="電話" class="invalid-feedback"></error-message>
                 </div>
                 <div class="mb-3">
@@ -297,8 +299,8 @@
                 </div>
               </v-form>
             </div>
-            <!-- 訂單連絡資訊 end -->
           </div>
+          <!-- 訂單連絡資訊 end -->
         </div>
       </div>
       <!-- container end -->

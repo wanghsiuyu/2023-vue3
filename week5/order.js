@@ -22,7 +22,7 @@ VeeValidate.configure({
 const app = createApp({
   data() {
     return {
-      loader: '',
+      isLoading: false,
       categoriesTabs: [
         ['超飽足果昔盆', 'bowl'],
         ['輕食冷盤', 'salad'],
@@ -45,9 +45,9 @@ const app = createApp({
   },
   methods: {
     loading() {
-      this.loader = this.$loading.show();
+      this.isLoading = true;
       setTimeout(() => {
-        this.loader.hide();
+        this.isLoading = false;
       }, 500);
     },
     getProducts() {
@@ -61,6 +61,7 @@ const app = createApp({
         });
     },
     getProduct(id) {
+      this.loading();
       axios
         .get(`${baseUrl}/api/${path}/product/${id}`)
         .then((res) => {
@@ -145,6 +146,9 @@ const app = createApp({
           .post(`${baseUrl}/api/${path}/order`, { data })
           .then((res) => {
             alert(res.data.message);
+            this.getCart();
+            this.$refs.form.resetForm();
+            this.message = '';
           })
           .catch((err) => {
             alert(err.response.data.message);
@@ -167,8 +171,8 @@ const app = createApp({
     this.loading();
   },
 });
+app.component('loading', VueLoading.Component);
 app.component('VForm', VeeValidate.Form);
 app.component('VField', VeeValidate.Field);
 app.component('ErrorMessage', VeeValidate.ErrorMessage);
-app.use(VueLoading.LoadingPlugin);
 app.mount('#app');

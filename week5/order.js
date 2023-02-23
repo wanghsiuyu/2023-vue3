@@ -23,6 +23,7 @@ const app = createApp({
   data() {
     return {
       isLoading: false,
+      loadingStatus: '',
       categoriesTabs: [
         ['超飽足果昔盆', 'bowl'],
         ['輕食冷盤', 'salad'],
@@ -77,9 +78,11 @@ const app = createApp({
         product_id,
         qty,
       };
+      this.loadingStatus = product_id;
       axios
         .post(`${baseUrl}/api/${path}/cart`, { data })
         .then((res) => {
+          this.loadingStatus = '';
           alert(res.data.message);
           this.getCart();
           this.$refs.modal.productModal.hide();
@@ -100,9 +103,11 @@ const app = createApp({
         });
     },
     removeCart(id) {
+      this.loadingStatus = id;
       axios
         .delete(`${baseUrl}/api/${path}/cart/${id}`)
         .then((res) => {
+          this.loadingStatus = '';
           alert(res.data.message);
           this.getCart();
         })
@@ -126,9 +131,11 @@ const app = createApp({
         product_id: cart.product_id,
         qty: cart.qty,
       };
+      this.loadingStatus = cart.id;
       axios
         .put(`${baseUrl}/api/${path}/cart/${cart.id}`, { data })
         .then((res) => {
+          this.loadingStatus = '';
           alert(res.data.message);
           this.getCart();
         })
@@ -138,6 +145,7 @@ const app = createApp({
     },
     onSubmit() {
       if (this.cartsTotal.carts.length) {
+        this.loading();
         const data = {
           user: this.user,
           message: this.message,
@@ -146,9 +154,9 @@ const app = createApp({
           .post(`${baseUrl}/api/${path}/order`, { data })
           .then((res) => {
             alert(res.data.message);
+            this.loading();
             this.getCart();
             this.$refs.form.resetForm();
-            this.message = '';
           })
           .catch((err) => {
             alert(err.response.data.message);
@@ -159,7 +167,7 @@ const app = createApp({
     },
     isPhone(value) {
       const phoneNumber = /^(09)[0-9]{8}$/;
-      return phoneNumber.test(value) ? true : '需要正確的電話號碼';
+      return phoneNumber.test(value) ? true : '需為正確的手機號碼格式';
     },
   },
   components: {

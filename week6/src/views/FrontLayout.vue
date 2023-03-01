@@ -18,10 +18,10 @@
         <!--手機版 cart & login icon-->
         <div class="d-lg-none">
           <RouterLink to="/order" class="navbar-brand">
-            <img src="../assets/image/Property 1=cart@2x.png" alt="cart" width="30" height="30" />
+            <img src="../assets/image/Property1=cart@2x.png" alt="cart" width="30" height="30" />
           </RouterLink>
           <RouterLink to="/login" class="navbar-brand text-center">
-            <img src="../assets/image/Property 1=member@2x.png" alt="member" width="30" height="30" />
+            <img src="../assets/image/Property1=member@2x.png" alt="member" width="30" height="30" />
           </RouterLink>
         </div>
         <!--漢堡按鈕-->
@@ -48,10 +48,10 @@
       <!--桌機版 cart & login icon-->
       <div class="ps-3 d-none d-lg-block">
         <RouterLink to="/order" class="navbar-brand">
-          <img src="../assets/image/Property 1=cart@2x.png" alt="cart" width="30" height="30" />
+          <img src="../assets/image/Property1=cart@2x.png" alt="cart" width="30" height="30" />
         </RouterLink>
         <RouterLink to="/login" class="navbar-brand text-center">
-          <img src="../assets/image/Property 1=member@2x.png" alt="member" width="30" height="30" />
+          <img src="../assets/image/Property1=member@2x.png" alt="member" width="30" height="30" />
         </RouterLink>
       </div>
     </div>
